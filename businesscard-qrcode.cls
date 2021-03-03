@@ -2,7 +2,7 @@
 % Author:  Mark Fuller 2021-
 % License: LGPL
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{businesscard-qrcode}[2018/08/15 version 1.2 ready for ctan]
+\ProvidesClass{businesscard-qrcode}[2021-03-03 version 1.3 ready for ctan]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % option evaluation
@@ -265,12 +265,6 @@ END:VCARD^^J}
 			\cond{name}
 		
 			\cond{Xadditionalnames}
-			
-			\cond{affiliation}
-			
-			% logo?
-			%\hfill
-			%\includegraphics[trim=0 0 0 0, clip, width=0.45\linewidth]{\logo}
 		
 		}
 	%\end{minipage}
@@ -280,18 +274,19 @@ END:VCARD^^J}
 % drawcard - assemble all blocks into the visiting card
 \newcommand\drawcard{
 	\ifBCQ@rightalign\begin{flushright}\fi
-		
-		\ifBCQ@rightalign
-			\begin{tabular}{lr}
-				\includegraphics[height=1cm, width=\imagepercents\textwidth, keepaspectratio]{\Xlogo} & \insertname
-			\end{tabular}
-		\else
-			\begin{tabular}{lr}
-				\insertname & \includegraphics[height=1cm, width=\imagepercents\textwidth, keepaspectratio]{\Xlogo}
-			\end{tabular}
-		\fi	
-		
-		\noindent\makebox[\linewidth]{\rule{\paperwidth}{0.4pt}} % horizontal line
+		\ifexists{Xlogo}{		
+			\ifBCQ@qrfirst
+				\begin{tabular*}{0.9\textwidth}{c @{\extracolsep{\fill}} r}
+					\includegraphics[height=6mm, width=\imagepercents\textwidth, keepaspectratio]{\Xlogo} & \insertname
+				\end{tabular*}
+			\else
+				\begin{tabular*}{0.9\textwidth}{l @{\extracolsep{\fill}} c}
+					\insertname & \includegraphics[height=6mm, width=\imagepercents\textwidth, keepaspectratio]{\Xlogo}
+				\end{tabular*}
+			\fi}
+
+
+		\noindent\makebox[\linewidth]{\rule{\paperwidth}{0.5mm}} % horizontal line
 		\vfill
 		\ifBCQ@qrfirst
 			\insertqrcode

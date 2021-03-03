@@ -1,13 +1,18 @@
 Businesscard with QR-Code
 =========================
 
-What happens, if you give your visiting card to someone? Either he manually types the text into his computer or mobilefone, or it will end up in a box and be forgotten. Nowadays data is required electronically, not on paper. Here is the solution: A visiting card with QR-Code that contains a full [vcard], so that it can be scanned with an [app] on the mobilefone and therefore automatically imported into the electronic contacts. This also works well, when you are offline and bluetooth transfer fails. So here is the highly configurable businescard or visitingcards with full [vcard] as QR-Code, ready to send to online printers. You can specify the exact size of the paper and the content within the paper, inluding generation of crop marks.
+More often than not, exchanged business cards are lost long before the contact information is manually entered into a (digital) contact database.
+By integrating a printed business card with a machine-readable QR code containing a formatted contact entry, the desired information may be easily scanned in to an electroinc database, utilizing software of your choice.
 
-Other available visitingcard templates, such as [mschlenker] distribute the cards on an A4 paper. But if you want a professional printer, such as [onlineprinters], then you need to be able to generate a PDF with exactly one card, an exactly defined border and crop marks.
+In the current release, contact encoding may follow either the well-established [vcard] standard or utilize [MeCard], so that it can be scanned (e.g. with a secure [app] on a mobilephone) and then imported into the electronic contacts. This also has the advantage of working offline.
 
-[![Example: John Doe from Hongkong](screenshots/john-doe-hongkong.jpg)](examples/john-doe-hongkong.tex)
-[![Example: Businesscard of Peter Muster from Zürich](screenshots/peter-muster-example-company-zuerich.jpg)](examples/peter-muster-example-company-zuerich.tex)
-[![Example: Nearly Real Examle Of My Card](screenshots/example.jpg)](examples/example.tex)
+As formatted, the resulting card is ready to send to online printers: 
+The resulting PDF includes a single, correctly-sized card with the necessary padding and crop marks for printing to and cutting multiple cards from a single sheet.
+
+[![Current Example: Your maintainer](screenshots/QRbusinesscard.png)](QRbusinesscard.tex)
+
+[![Old Example: John Doe from Hongkong](screenshots/john-doe-hongkong.jpg)](examples/john-doe-hongkong.tex)
+[![Old Example: Businesscard of Peter Muster from Zürich](screenshots/peter-muster-example-company-zuerich.jpg)](examples/peter-muster-example-company-zuerich.tex)
 
 
 Features
@@ -15,12 +20,13 @@ Features
 
 - all information is in the QR-Code
 - full privacy control: input is optional, specify only what you need, you decide what information to share, e.g. I print three cards, with phone and address, without address and only with electronical contacts, no phone nor address
+- option to add a professional or personal logo
 - optional icons, optional small hint texts
 - several alignments
 - freely defined size of paper and content
 - supports honoric titles, full names, address with post office box and extended information
-- supports telefone, email, [jabber] and [matrix] chat
-- supports several urls for your hompages
+- supports telephone, email, [jabber] and [matrix] chat
+- supports several urls for your homepages
 - supports [gitea], [github], [git]
 - supports [facebook], [twitter], [google+], [youtube], [wikipedia]
 - supports [pgp] key url and fingerprint
@@ -39,6 +45,8 @@ Copy `businesscard-qrcode/businesscard-qrcode.cls` to your LaTeX class path. Sim
 mkdir ~/texmf/tex/latex/businesscard-qrcode
 cp businesscard-qrcode/businesscard-qrcode.cls ~/texmf/tex/latex/businesscard-qrcode/
 ```
+
+Alternatively, the package may be avilable in your repositories, but it may be an older version.
 
 
 Compilation
@@ -91,6 +99,7 @@ Layout options are set as options to the `\documentclass`, e.g.:
 - `fill` or `nofill`: fill empty space between icon and text, default: `fill`
 - `qrfirst` or `textfirst`: switch position of QR-Code and text block, default: `qrfirst`
 - `https` or `www`: should links in the hints be prefixed with `https://` or `www.`, default: `https`
+- `uselogo`: add a graphic to the name header, default: false (off)
 
 
 Data Definitions
@@ -148,6 +157,7 @@ See this example_
 - `\google`: your account name on [google+] — only the name of the account, the url is prepended automatically
 - `\pgpurl`: the full url to your pgp public key (only added to the QR-Code, not shown in the text)
 - `\pgpfingerprint`: the fingerprint of your pgp public key
+- `\logo`: the image file to use as a logo
 
 
 Print the Card
@@ -204,7 +214,8 @@ If you are missing a feature or a configuration option, consult the [project] pa
 
 [examples]: examples "more examples"
 [vcard]: https://tools.ietf.org/html/rfc6350 "RFC 6350, vCard Format Specification Version 4.0"
-[app]: https://f-droid.org/de/packages/com.google.zxing.client.android/ "Barcode Scanner"
+[MeCard]: https://en.wikipedia.org/wiki/MeCard_(QR_code) "MeCard (QR code)"
+[app]: https://secuso.aifb.kit.edu/QR_Scanner.php "Privacy Friendly QR-Scanner App"
 [onlineprinters]: https://de.onlineprinters.ch/k/standardvisitenkarten "onlineprinters.ch"
 [mschlenker]: https://gist.github.com/mschlenker/f60e0f15ff1edfc4881c "visitenkarten-qr.tex"
 [texstudio_d30266.tex]: examples/texstudio_d30266.tex "simple example source file"
@@ -214,6 +225,7 @@ If you are missing a feature or a configuration option, consult the [project] pa
 [jabber]: https://en.wikipedia.org/wiki/Jabber.org "the Jabber / XMPP instant messaging standard"
 [matrix]: https://matrix.org "the matrix instant messaging standard"
 [riot]: https://riot.im "matrix compatible instant messaging tool for all platforms"
+[element]: https://element.io/ "matrix compatible instant messaging tool for all platforms"
 [gitea]: https://gitea.io "github-like project repository, a gogs clone"
 [gogs]: https://gitea.io "github-like project repository"
 [github]: https://github.com "a project repository"
@@ -225,9 +237,9 @@ If you are missing a feature or a configuration option, consult the [project] pa
 [wikipedia]: https://wikipedia.org "the online encyclopedia"
 [pgp]: https://en.wikipedia.org/wiki/Pretty_Good_Privacy "pretty good privacy — encryption standard"
 [nextcloud federation id]: https://nextcloud.com/federation "share your cloud across others"
-[I]: https://marc.wäckerlin.ch "Marc Wäckerlin"
+[I]: https://mefuller.github.io/ "Mark E. Fuller"
 [ticket]: https://mrw.sh/templates/businesscard-qrcode/issues "open issues and tickets for my LaTeX-templates project"
 [author]: https://marc.wäckerlin.ch "Marc Wäckerlin"
-[project]: https://mrw.sh/templates/businesscard-qrcode "the main project page"
-[lgpl]: https://www.gnu.org/licenses/lgpl-3.0 "Library GNU Public License"
+[project]: https://github.com/mefuller/businesscard-qrcode "the main project page"
+[lgpl]: https://www.gnu.org/licenses/lgpl-3.0 "GNU Lesser General Public License"
 # businesscard-qrcode
