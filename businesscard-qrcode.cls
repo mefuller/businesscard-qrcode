@@ -1,4 +1,5 @@
-% Author:  Marc Wäckerlin
+% Author:  Marc Wäckerlin -2018
+% Author:  Mark Fuller 2021-
 % License: LGPL
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{businesscard-qrcode}[2018/08/15 version 1.2 ready for ctan]
@@ -21,6 +22,8 @@
 \DeclareStringOption[0.50]{textwidth}
 \DeclareStringOption[0.40]{qrwidth}
 \DeclareStringOption[de]{lang}
+\DeclareBoolOption[true]{vcard}
+\DeclareComplementaryOption{mecard}{vcard}
 \DeclareBoolOption[true]{address}
 \DeclareComplementaryOption{noaddress}{address}
 \DeclareBoolOption[true]{hint}
@@ -37,6 +40,7 @@
 \DeclareComplementaryOption{textfirst}{qrfirst}
 \DeclareBoolOption[true]{https}
 \DeclareComplementaryOption{www}{https}
+\DeclareBoolOption[false]{uselogo}
 \DeclareDefaultOption{\@unknownoptionerror}
 \ProcessKeyvalOptions*
 
@@ -75,6 +79,8 @@
 \renewcommand*\familydefault{\sfdefault}
 \setlength{\fboxsep}{0pt}
 
+%add logo (future)
+\RequirePackage{graphicx}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % data registration
@@ -117,6 +123,7 @@
 \registerData{google}
 \registerData{pgpurl}
 \registerData{pgpfingerprint}
+\registerData{logo}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -173,6 +180,10 @@ FN:\name\ifexists{Xadditionalnames}{\ifcsempty{name}{}{\ }\Xadditionalnames}^^J
 \ifexists{Xpgpfingerprint}{KEY:data:application/x-pgp-fingerprint,\Xpgpfingerprint^^J}
 END:VCARD^^J}
 
+% simplified QR standard - mecard (and severely reduced content)
+% see https://en.wikipedia.org/wiki/MeCard_(QR_code) for fields
+\newcommand\mecard{MECARD:N:\cond{Xfamilynames} \cond{Xhonoricsuffix},\cond{Xhonoricprefix} \cond{Xgivennames};\ifexists{Xemail}{EMAIL:\Xemail};\ifexists{Xphone}{TEL:\Xphone};\ifexists{Xhomepage}{URL:https://\Xhomepage};\ifexists{Xpgpfingerprint}{NOTE:\Xpgpfingerprint};;}
+%\ifexists{Xmatrixorg}{IMPP;TYPE=MATRIX:\Xmatrixorg};
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % address - the address as shown in the textbox
@@ -233,7 +244,11 @@ END:VCARD^^J}
 	%\frame
 	{
 	\begin{minipage}[c][\heightscale][c]{\imagepercents\textwidth}
-		\qrcode[level=Q,version=0,height=\textwidth]{\vcard}
+		\ifBCQ@vcard
+			\qrcode[padding,level=Q,version=7,height=\textwidth]{\vcard}
+		\else
+			\qrcode[padding,level=Q,version=7,height=\textwidth]{\mecard}
+		\fi
 	\end{minipage}
 }
 }
@@ -250,6 +265,12 @@ END:VCARD^^J}
 			\cond{name}
 		
 			\cond{Xadditionalnames}
+			
+			\cond{affiliation}
+			
+			% logo?
+			%\hfill
+			%\includegraphics[trim=0 0 0 0, clip, width=0.45\linewidth]{\logo}
 		
 		}
 	%\end{minipage}
@@ -259,7 +280,17 @@ END:VCARD^^J}
 % drawcard - assemble all blocks into the visiting card
 \newcommand\drawcard{
 	\ifBCQ@rightalign\begin{flushright}\fi
-		\insertname 
+		
+		\ifBCQ@rightalign
+			\begin{tabular}{lr}
+				\includegraphics[height=1cm, width=\imagepercents\textwidth, keepaspectratio]{\Xlogo} & \insertname
+			\end{tabular}
+		\else
+			\begin{tabular}{lr}
+				\insertname & \includegraphics[height=1cm, width=\imagepercents\textwidth, keepaspectratio]{\Xlogo}
+			\end{tabular}
+		\fi	
+		
 		\noindent\makebox[\linewidth]{\rule{\paperwidth}{0.4pt}} % horizontal line
 		\vfill
 		\ifBCQ@qrfirst
