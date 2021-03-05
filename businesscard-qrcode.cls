@@ -1,6 +1,6 @@
 % Author:  Marc Wäckerlin -2018
 % Author:  Mark Fuller 2021-
-% License: LGPL
+% License: LGPL 3.0
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesClass{businesscard-qrcode}[2021-03-03 version 1.3 ready for ctan]
 
@@ -78,9 +78,8 @@
 \setlength{\parindent}{0pt}
 \renewcommand*\familydefault{\sfdefault}
 \setlength{\fboxsep}{0pt}
-
-%add logo (future)
 \RequirePackage{graphicx}
+\RequirePackage{ifthen}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % data registration
@@ -183,7 +182,6 @@ END:VCARD^^J}
 % simplified QR standard - mecard (and severely reduced content)
 % see https://en.wikipedia.org/wiki/MeCard_(QR_code) for fields
 \newcommand\mecard{MECARD:N:\cond{Xfamilynames} \cond{Xhonoricsuffix},\cond{Xhonoricprefix} \cond{Xgivennames};\ifexists{Xemail}{EMAIL:\Xemail};\ifexists{Xphone}{TEL:\Xphone};\ifexists{Xhomepage}{URL:https://\Xhomepage};\ifexists{Xpgpfingerprint}{NOTE:\Xpgpfingerprint};;}
-%\ifexists{Xmatrixorg}{IMPP;TYPE=MATRIX:\Xmatrixorg};
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % address - the address as shown in the textbox
@@ -245,9 +243,9 @@ END:VCARD^^J}
 	{
 	\begin{minipage}[c][\heightscale][c]{\imagepercents\textwidth}
 		\ifBCQ@vcard
-			\qrcode[padding,level=Q,version=7,height=\textwidth]{\vcard}
+			\qrcode[padding,level=Q,version=0,height=\textwidth]{\vcard}
 		\else
-			\qrcode[padding,level=Q,version=7,height=\textwidth]{\mecard}
+			\qrcode[padding,level=Q,version=0,height=\textwidth]{\mecard}
 		\fi
 	\end{minipage}
 }
@@ -274,18 +272,17 @@ END:VCARD^^J}
 % drawcard - assemble all blocks into the visiting card
 \newcommand\drawcard{
 	\ifBCQ@rightalign\begin{flushright}\fi
-		\ifexists{Xlogo}{		
-			\ifBCQ@qrfirst
-				\begin{tabular*}{0.9\textwidth}{c @{\extracolsep{\fill}} r}
-					\includegraphics[height=6mm, width=\imagepercents\textwidth, keepaspectratio]{\Xlogo} & \insertname
-				\end{tabular*}
-			\else
-				\begin{tabular*}{0.9\textwidth}{l @{\extracolsep{\fill}} c}
-					\insertname & \includegraphics[height=6mm, width=\imagepercents\textwidth, keepaspectratio]{\Xlogo}
-				\end{tabular*}
-			\fi}
-
-
+		\ifthenelse{\equal{\Xlogo}{}}  % check if logo is empty
+			{\insertname}  % no logo - print name only
+			% else, print name and logo with layout options
+			{		
+			\begin{tabular*}{0.9\textwidth}{c @{\extracolsep{\fill}} r}
+			\ifthenelse{\boolean{BCQ@qrfirst}}
+				{\includegraphics[height=6mm, width=\imagepercents\textwidth, keepaspectratio]{\Xlogo} & \insertname}
+				{\insertname & \includegraphics[height=6mm, width=\imagepercents\textwidth, keepaspectratio]{\Xlogo}}
+			\end{tabular*}
+			}
+		
 		\noindent\makebox[\linewidth]{\rule{\paperwidth}{0.5mm}} % horizontal line
 		\vfill
 		\ifBCQ@qrfirst
@@ -297,6 +294,7 @@ END:VCARD^^J}
 			\hfill
 			\insertqrcode
 		\fi
+
 		\ifexists{Xpgpfingerprint}{
 			\vfill
 			\ifBCQ@iconleft
@@ -307,7 +305,6 @@ END:VCARD^^J}
 		}
 	\ifBCQ@rightalign\end{flushright}\fi
 }
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % cut / crop marks
