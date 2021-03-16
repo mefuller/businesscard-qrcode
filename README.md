@@ -11,9 +11,6 @@ The resulting PDF includes a single, correctly-sized card with the necessary pad
 
 [![Current Example: Your maintainer](screenshots/QRbusinesscard.png)](QRbusinesscard.tex)
 
-[![Old Example: John Doe from Hongkong](screenshots/john-doe-hongkong.jpg)](examples/john-doe-hongkong.tex)
-[![Old Example: Businesscard of Peter Muster from Zürich](screenshots/peter-muster-example-company-zuerich.jpg)](examples/peter-muster-example-company-zuerich.tex)
-
 
 Features
 ========
