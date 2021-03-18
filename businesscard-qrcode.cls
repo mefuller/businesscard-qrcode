@@ -80,6 +80,7 @@
 \setlength{\fboxsep}{0pt}
 \RequirePackage{graphicx}
 \RequirePackage{ifthen}
+\RequirePackage{tabularx}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % data registration
@@ -276,7 +277,7 @@ END:VCARD^^J}
 			{\insertname}  % no logo - print name only
 			% else, print name and logo with layout options
 			{		
-			\begin{tabular*}{0.9\textwidth}{c @{\extracolsep{\fill}} r}
+			\begin{tabular*}{0.99\textwidth}{c c}
 			\ifthenelse{\boolean{BCQ@qrfirst}}
 				{\includegraphics[height=6mm, width=\imagepercents\textwidth, keepaspectratio]{\Xlogo} & \insertname}
 				{\insertname & \includegraphics[height=6mm, width=\imagepercents\textwidth, keepaspectratio]{\Xlogo}}
