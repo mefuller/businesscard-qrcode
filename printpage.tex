@@ -1,0 +1,28 @@
+\documentclass[a4paper,12pt]{article}
+\usepackage[newdimens]{labels}
+% Sigel DP830 Business Card Perforated Printer Stock
+\LabelCols=2            % Number of columns of labels per page
+\LabelRows=5            % Number of rows of labels per page
+\LeftPageMargin=15mm    % These four parameters give the
+\RightPageMargin=15mm   % page gutter sizes. The outer edges of
+\TopPageMargin=10mm     % the outer labels are the specified
+\BottomPageMargin=12mm  % distances from the edge of the paper.
+\InterLabelColumn=10mm  % Gap between columns of labels
+\InterLabelRow=0mm      % Gap between rows of labels
+
+% These four parameters give the extra space used around the text on each actual label.
+% Set to zero for printing ready-made image
+\LeftLabelBorder=0mm
+\RightLabelBorder=0mm
+\TopLabelBorder=0mm
+\BottomLabelBorder=0mm
+
+% number of times to print same label
+\numberoflabels=10
+
+% paste in ready card images
+\usepackage{graphicx}
+
+\begin{document}
+    \genericlabel{\includegraphics[trim = 2mm 2mm 2mm 2mm, clip]{/home/fuller/Workspace/businesscard-qrcode/QRbusinesscard-alt.pdf}}
+\end{document}
