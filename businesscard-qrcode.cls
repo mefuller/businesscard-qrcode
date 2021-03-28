@@ -147,7 +147,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % name - assemble full name from the parts, such as Xgivennames and Xfamilynames
-\newcommand\name{\ifexists{Xhonoricprefix}{\Xhonoricprefix\ }\ifexists{Xgivennames}{\Xgivennames\ }\ifexists{Xfamilynames}{\Xfamilynames}\ifexists{Xhonoricsuffix}{\ \Xhonoricsuffix}}
+\newcommand\name{\ifexists{Xhonoricprefix}{\Xhonoricprefix\ }\ifexists{Xgivennames}{\Xgivennames\ }\ifexists{Xfamilynames}{\Xfamilynames}\ifexists{Xhonoricsuffix}{,\ \Xhonoricsuffix}}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -182,7 +182,13 @@ END:VCARD^^J}
 
 % simplified QR standard - mecard (and severely reduced content)
 % see https://en.wikipedia.org/wiki/MeCard_(QR_code) for fields
-\newcommand\mecard{MECARD:N:\cond{Xfamilynames} \cond{Xhonoricsuffix},\cond{Xhonoricprefix} \cond{Xgivennames};\ifexists{Xemail}{EMAIL:\Xemail};\ifexists{Xphone}{TEL:\Xphone};\ifexists{Xhomepage}{URL:https://\Xhomepage};\ifexists{Xpgpfingerprint}{NOTE:\Xpgpfingerprint};;}
+\newcommand\mecard{
+MECARD:N:\cond{Xfamilynames},\cond{Xgivennames};
+\ifexists{Xemail}{EMAIL:\Xemail};
+\ifexists{Xphone}{TEL:\Xphone};
+\ifexists{Xhomepage}{URL:https://\Xhomepage};
+\ifexists{Xpgpfingerprint}{NOTE:\ PGP\ fingerprint\ \Xpgpfingerprint};
+;}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % address - the address as shown in the textbox
@@ -229,7 +235,7 @@ END:VCARD^^J}
 			\vspace{1em}
 		}
 	
-		\insa[tel:]{Xphone}{faMobile}\insa[mailto:]{Xemail}{Email}\insa[xmpp]{Xjabber}{faCommentsO}\insa[matrix.org]{Xmatrixorg}{faCommentsO}\insa[nextcloud-id]{Xcloud}{faCloud}\insa[\protdisplay]{Xhomepage}{faHome}\insa[\protdisplay]{Xwordpress}{faWordpress}\insa[\protdisplay]{Xdrupal}{faDrupal}\insa[\protdisplay]{Xjoomla}{faJoomla}\insa[{\protprefix}\lang.wikipedia.org/wiki/]{Xwikipedia}{faWikipediaW}\insa[\protdisplay]{Xlink}{faLink}\insa[\protdisplay]{Xworld}{faGlobe}\insa[\protdisplay]{Xgit}{faGit}\insa[\protdisplay]{Xgitea}{faGithubAlt}\insa[{\protprefix}github.com/]{Xgithub}{faGithub}\insa[{\protprefix}facebook.com/]{Xfacebook}{faFacebook}\insa[{\protprefix}twitter.com/]{Xtwitter}{faTwitter}\insa[{\protprefix}youtube.com/user/]{Xyoutube}{faYoutube}\insa[{\protprefix}plus.google.com/+]{Xgoogle}{faGooglePlus}
+		\insa[tel:]{Xphone}{faMobile}\insa[mailto:]{Xemail}{Email}\insa[xmpp]{Xjabber}{faCommentsO}\insa[{[}matrix{]}]{Xmatrixorg}{faCommentsO}\insa[nextcloud-id]{Xcloud}{faCloud}\insa[\protdisplay]{Xhomepage}{faHome}\insa[\protdisplay]{Xwordpress}{faWordpress}\insa[\protdisplay]{Xdrupal}{faDrupal}\insa[\protdisplay]{Xjoomla}{faJoomla}\insa[{\protprefix}\lang.wikipedia.org/wiki/]{Xwikipedia}{faWikipediaW}\insa[\protdisplay]{Xlink}{faLink}\insa[\protdisplay]{Xworld}{faGlobe}\insa[\protdisplay]{Xgit}{faGit}\insa[\protdisplay]{Xgitea}{faGithubAlt}\insa[{\protprefix}github.com/]{Xgithub}{faGithub}\insa[{\protprefix}facebook.com/]{Xfacebook}{faFacebook}\insa[{\protprefix}twitter.com/]{Xtwitter}{faTwitter}\insa[{\protprefix}youtube.com/user/]{Xyoutube}{faYoutube}\insa[{\protprefix}plus.google.com/+]{Xgoogle}{faGooglePlus}
 
 		\ifBCQ@rightalign\end{flushright}\fi
 	\end{minipage}
