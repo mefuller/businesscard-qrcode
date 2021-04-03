@@ -1,0 +1,2 @@
+Logos in this folder are taken from https://www.gnu.org/graphics/license-logos.html (30 March 2021).
+Some may be cropped from the original images and reformatted, e.g. SVG images containing multiple logos cropped and optionally exported to PNG.
