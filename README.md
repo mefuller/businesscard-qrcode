@@ -234,9 +234,9 @@ If you are missing a feature or a configuration option, consult the [project] pa
 [wikipedia]: https://wikipedia.org "the online encyclopedia"
 [pgp]: https://en.wikipedia.org/wiki/Pretty_Good_Privacy "pretty good privacy — encryption standard"
 [nextcloud federation id]: https://nextcloud.com/federation "share your cloud across others"
-[I]: https://mefuller.github.io/ "Mark E. Fuller"
-[ticket]: https://mrw.sh/templates/businesscard-qrcode/issues "open issues and tickets for my LaTeX-templates project"
-[author]: https://marc.wäckerlin.ch "Marc Wäckerlin"
+[I]: https://www.stossrohr.net "Mark E. Fuller"
+[ticket]: https://github.com/mefuller/businesscard-qrcode/issues "open issues and tickets for my LaTeX-templates project"
+[author]: https://www.stossrohr.net "Mark E. Fuller"
 [project]: https://github.com/mefuller/businesscard-qrcode "the main project page"
 [lgpl]: https://www.gnu.org/licenses/lgpl-3.0 "GNU Lesser General Public License"
 # businesscard-qrcode
