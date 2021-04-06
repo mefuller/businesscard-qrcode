@@ -22,6 +22,7 @@ Features
 - several alignments
 - freely defined size of paper and content
 - supports honoric titles, full names, address with post office box and extended information
+- supports job title
 - supports telephone, email, [jabber] and [matrix] chat
 - supports several urls for your homepages
 - supports [gitea], [github], [git]
@@ -88,7 +89,8 @@ Layout options are set as options to the `\documentclass`, e.g.:
 - `textwidth=`: relative width of the text block `1` means full width, so `qrwidth` plus `textwidth` should be smaller than `1` the remainig space is left empty between the text and QR-Code, default: `0.55` (that's 55% of the available space)
 - `qrwidth=`: relative width of the QR-Code `1` means full width, so `qrwidth` plus `textwidth` should be smaller than `1` the remainig space is left empty between the text and QR-Code, default: `0.40` (that's 40% of the available space)
 - `lang=`: language of the wikipedia page, will be prepended before `wikipedia.org`, e.g. `de.wikipedia.org`, default: `de`
-- `address`or `noaddress`: disable rendering of the address in text and QR-Code, default: address
+- `address` or `noaddress`: disable rendering of the address in text and QR-Code, default: `address`
+- `zipfirst` or `cityfirst`: define address printing style, whether postal code precedes or follows city, default: `zipfirst` 
 - `hint` or `nohint`: show the little text hints, default: `hint`
 - `icon` or `noicon`: show the icons, default: `icon`
 - `rightalign` or `leftalign`: align text left or right, default: `rightalign`
@@ -125,7 +127,8 @@ See this example_
 - `\familynames`: your family names
 - `\honoricprefix`: honorix name prefixes, e.g. academic titles
 - `\honoricsuffix`: honoric name suffixes
-- `\additionalnames`: additionl names — I use it for the company name in business cards
+- `\additionalnames`: additional names — I use it for the company name in business cards
+- `\ptitle`: professional (job) title
 - `\pobox`: post office box
 - `\extaddr`: address extension, e.g. name of a building or floor number
 - `\street`: street and number of the address
