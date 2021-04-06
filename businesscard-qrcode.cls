@@ -26,6 +26,8 @@
 \DeclareComplementaryOption{mecard}{vcard}
 \DeclareBoolOption[true]{address}
 \DeclareComplementaryOption{noaddress}{address}
+\DeclareBoolOption[true]{zipfirst}
+\DeclareComplementaryOption{cityfirst}{zipfirst}
 \DeclareBoolOption[true]{hint}
 \DeclareComplementaryOption{nohint}{hint}
 \DeclareBoolOption[true]{icon}
@@ -89,12 +91,13 @@
 		\expandafter\def\csname X#1\endcsname{##1}
 	}
 }
-\registerData{type}
 \registerData{givennames}
 \registerData{familynames}
 \registerData{honoricprefix}
 \registerData{honoricsuffix}
 \registerData{additionalnames}
+\registerData{ptitle}
+\registerData{type}
 \registerData{pobox}
 \registerData{extaddr}
 \registerData{street}
@@ -156,6 +159,7 @@
 VERSION:4.0^^J
 N:\cond{Xfamilynames};\cond{Xgivennames};\cond{Xadditionalnames};\cond{Xhonoricprefix};\cond{Xhonoricsuffix}^^J
 FN:\name\ifexists{Xadditionalnames}{\ifcsempty{name}{}{\ }\Xadditionalnames}^^J
+\ifexists{Xptitle}{TITLE\ifexists{Xtype}{;TYPE=\Xtype}:\Xptitle^^J}
 \ifexists{printaddress}{ADR\ifexists{Xtype}{;TYPE=\Xtype}:\cond{Xpobox};\cond{Xextaddr};\cond{Xstreet};\cond{Xcity};\cond{Xregion};\cond{Xzip};\cond{Xcountry}^^J}
 \ifexists{Xphone}{TEL;VALUE=uri;TYPE=\ifexists{Xtype}{\Xtype,}voice,text:tel:\Xphone^^J}
 \ifexists{Xemail}{EMAIL\ifexists{Xtype}{;TYPE=\Xtype}:\Xemail^^J}
@@ -200,7 +204,11 @@ MECARD:N:\cond{Xfamilynames},\cond{Xgivennames};
 	
 	\cond{Xstreet}
 	
-	\cond{Xzip} \cond{Xcity}
+	\ifBCQ@zipfirst
+		\cond{Xzip} \cond{Xcity}
+	\else
+		\cond{Xcity} \cond{Xzip}
+	\fi
 	
 	\cond{Xregion} \cond{Xcountry}
 	
@@ -276,6 +284,20 @@ MECARD:N:\cond{Xfamilynames},\cond{Xgivennames};
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% inserttitle - insert the job description
+\newcommand\inserttitle{
+	%\frame
+	%\begin{minipage}{\textwidth}
+		%\pbox[t]{0.9\textwidth}
+		{\centering
+			%\scriptsize 
+			\cond{Xptitle}
+		
+		}
+	%\end{minipage}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % drawcard - assemble all blocks into the visiting card
 \newcommand\drawcard{
 	\ifBCQ@rightalign\begin{flushright}\fi
@@ -291,7 +313,12 @@ MECARD:N:\cond{Xfamilynames},\cond{Xgivennames};
 			}
 		
 		\noindent\makebox[\linewidth]{\rule{\paperwidth}{0.5mm}} % horizontal line
+		\ifexists{Xptitle}{
+			\inserttitle
+			\vspace{-\baselineskip}
+		} 
 		\vfill
+		
 		\ifBCQ@qrfirst
 			\insertqrcode
 			\hfill
