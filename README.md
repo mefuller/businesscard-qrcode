@@ -9,7 +9,7 @@ In the current release, contact encoding may follow either the well-established 
 As formatted, the resulting card is ready to send to online printers: 
 The resulting PDF includes a single, correctly-sized card with the necessary padding and crop marks for printing to and cutting multiple cards from a single sheet.
 
-[![Current Example: Your maintainer](QRbusinesscard.pdf)](QRbusinesscard.tex)
+[![Current Example: Your maintainer](QRbusinesscard.png)](QRbusinesscard.tex)
 
 
 Features
