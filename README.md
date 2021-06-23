@@ -15,8 +15,8 @@ The resulting PDF includes a single, correctly-sized card with the necessary pad
 Features
 ========
 
-- all information is in the QR-Code
-- full privacy control: input is optional, specify only what you need, you decide what information to share, e.g. I print three cards, with phone and address, without address and only with electronical contacts, no phone nor address
+- all information is in the QR-Code, formatted as a [vcard] or [MeCard]
+- full privacy control: input is optional, specify only what you need, you decide what information to share, e.g. I print three cards, with phone and address, without address, and only with electronic contacts, no phone nor address
 - option to add a professional or personal logo
 - optional icons, optional small hint texts
 - several alignments
@@ -88,6 +88,7 @@ Layout options are set as options to the `\documentclass`, e.g.:
 - `cutlen=`: length of the cut marks in `mm`, default: `1`
 - `textwidth=`: relative width of the text block `1` means full width, so `qrwidth` plus `textwidth` should be smaller than `1` the remainig space is left empty between the text and QR-Code, default: `0.55` (that's 55% of the available space)
 - `qrwidth=`: relative width of the QR-Code `1` means full width, so `qrwidth` plus `textwidth` should be smaller than `1` the remainig space is left empty between the text and QR-Code, default: `0.40` (that's 40% of the available space)
+- `vcard` or `mecard`: data format for QR code; mecard is simpler and includes only essential electronic information (email, phone, webpage, PGP)
 - `lang=`: language of the wikipedia page, will be prepended before `wikipedia.org`, e.g. `de.wikipedia.org`, default: `de`
 - `address` or `noaddress`: disable rendering of the address in text and QR-Code, default: `address`
 - `zipfirst` or `cityfirst`: define address printing style, whether postal code precedes or follows city, default: `zipfirst` 
@@ -139,7 +140,7 @@ See this example_
 - `\phone`: your phone number, the phone is marked as mobile, so to be used for voice and text (SMS)
 - `\email`: your email address
 - `\jabber`: your [jabber] or xmpp chat address
-- `\matrixorg`: your [matrix] chat addres, hint: use [riot] messenger for [matrix]
+- `\matrixorg`: your [matrix] chat addres
 - `\cloud`: your [nextcloud federation id] — the url is prepended automatically
 - `\homepage`: url to a web site with «home» icon — without `https://` not `www` (unless it is required), this is prepended automatically
 - `\world`: url to a web site with «world» icon — without `https://` not `www` (unless it is required), this is prepended automatically
@@ -171,6 +172,8 @@ The card is designed for professional printing service, such as [onlineprinters]
                    {businesscard-qrcode}
 
 ![example with special paper size](screenshots/special-papersize.jpg)
+
+An [example layout](printpage.tex) of cards for printing on full sheets is provided.
 
 
 Usage Example
@@ -224,7 +227,6 @@ If you are missing a feature or a configuration option, consult the [project] pa
 [example.pdf]: examples/example.pdf "larger example resulting pdf"
 [jabber]: https://en.wikipedia.org/wiki/Jabber.org "the Jabber / XMPP instant messaging standard"
 [matrix]: https://matrix.org "the matrix instant messaging standard"
-[riot]: https://riot.im "matrix compatible instant messaging tool for all platforms"
 [element]: https://element.io/ "matrix compatible instant messaging tool for all platforms"
 [gitea]: https://gitea.io "github-like project repository, a gogs clone"
 [gogs]: https://gitea.io "github-like project repository"
