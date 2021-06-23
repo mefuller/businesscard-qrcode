@@ -9,7 +9,7 @@ In the current release, contact encoding may follow either the well-established 
 As formatted, the resulting card is ready to send to online printers: 
 The resulting PDF includes a single, correctly-sized card with the necessary padding and crop marks for printing to and cutting multiple cards from a single sheet.
 
-[![Current Example: Your maintainer](screenshots/QRbusinesscard.png)](QRbusinesscard.tex)
+[![Current Example: Your maintainer](QRbusinesscard.png)](QRbusinesscard.tex)
 
 
 Features
@@ -99,7 +99,7 @@ Layout options are set as options to the `\documentclass`, e.g.:
 - `fill` or `nofill`: fill empty space between icon and text, default: `fill`
 - `qrfirst` or `textfirst`: switch position of QR-Code and text block, default: `qrfirst`
 - `https` or `www`: should links in the hints be prefixed with `https://` or `www.`, default: `https`
-- `uselogo`: add a graphic to the name header, default: false (off)
+- `uselogo` or `nologo`: add a graphic to the name header, default: `nologo` (off)
 
 
 Data Definitions
@@ -129,6 +129,7 @@ See this example_
 - `\honoricprefix`: honorix name prefixes, e.g. academic titles
 - `\honoricsuffix`: honoric name suffixes
 - `\additionalnames`: additional names — I use it for the company name in business cards
+- `\displayname`: name to print on card if different than one encoded
 - `\ptitle`: professional (job) title
 - `\pobox`: post office box
 - `\extaddr`: address extension, e.g. name of a building or floor number
@@ -137,6 +138,7 @@ See this example_
 - `\region`: region of the address
 - `\zip`: zip code of the address
 - `\country`: full name of country of the address in the language of the card
+- `\displayaddress`: address to print on card if different than one encoded
 - `\phone`: your phone number, the phone is marked as mobile, so to be used for voice and text (SMS)
 - `\email`: your email address
 - `\jabber`: your [jabber] or xmpp chat address

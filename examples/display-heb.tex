@@ -1,0 +1,45 @@
+% !TeX program = xelatex
+
+\documentclass[lang=en,address,cityfirst,textwidth=0.58,qrwidth=0.35,
+https,fill,iconleft,rightalign,hint,icon,qrfirst,
+mecard,uselogo,
+paperheight=55mm,paperwidth=85mm,
+contentheight=53mm,contentwidth=83mm,
+cutdist=0, cutlen=0]{businesscard-qrcode}
+
+\usepackage{cjhebrew}
+
+\type{work}
+
+%name encoded in QR
+\honoricsuffix{Ph.D.}
+\givennames{Mark\ Edward}
+\familynames{Fuller}
+
+%override name printed on card (Hebrew spelling, in this case)
+\displayname{\LARGE\<dwq.twr.t> ,\<m'rq 'dw'rd pwlr>}
+
+\ptitle{\</s wwlpswN>''\<hpqwlth lhndsh kymy.t `>} %will throw an error if VCARD used!
+
+\phone{+972\ (0)53-872-6579}
+\homepage{www.stossrohr.net} % do not include https://
+\github{mefuller}
+\email{fuller@stossrohr.net}
+\matrixorg{@mefuller:matrix.org}
+
+%address encoded in QR (VCARD only)
+\street{Technion\ I.I.T.} %Faculty of Chemical Engineering - 
+\city{Haifa}
+\zip{3200003}
+\country{ISRAEL}
+
+%override address printed on card (Hebrew spelling, in this case)
+\displayaddress{{\LARGE\<h.tknywN>}\\3200003 {\LARGE\<.hyph>\\\<y/sr'l>}}
+
+\pgpfingerprint{73F1\ A30C\ BDF4\ DB4B\ C75F\ FD0F\ D599\ E76C\ FFCA\ BF60}
+\pgpurl{http://keys.gnupg.net/pks/lookup?search=0xD599E76CFFCABF60}
+\logo{logo/lgpl-v3.svg.png} % thank you FSF for all that you do!
+
+\begin{document}
+	\drawcard
+\end{document}
