@@ -2,7 +2,7 @@
 % Author:  Mark Fuller 2021-
 % License: LGPL 3.0
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{businesscard-qrcode}[2021-03-03 version 1.3 ready for ctan]
+\ProvidesClass{businesscard-qrcode}%[2021-03-03 version 1.3 ready for ctan]
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % option evaluation
@@ -43,6 +43,7 @@
 \DeclareBoolOption[true]{https}
 \DeclareComplementaryOption{www}{https}
 \DeclareBoolOption[false]{uselogo}
+\DeclareComplementaryOption{nologo}{uselogo}
 \DeclareDefaultOption{\@unknownoptionerror}
 \ProcessKeyvalOptions*
 
@@ -96,6 +97,7 @@
 \registerData{honoricprefix}
 \registerData{honoricsuffix}
 \registerData{additionalnames}
+\registerData{displayname}
 \registerData{ptitle}
 \registerData{type}
 \registerData{pobox}
@@ -105,6 +107,7 @@
 \registerData{region}
 \registerData{zip}
 \registerData{country}
+\registerData{displayaddress}
 \registerData{phone}
 \registerData{email}
 \registerData{jabber}
@@ -152,7 +155,6 @@
 % name - assemble full name from the parts, such as Xgivennames and Xfamilynames
 \newcommand\name{\ifexists{Xhonoricprefix}{\Xhonoricprefix\ }\ifexists{Xgivennames}{\Xgivennames\ }\ifexists{Xfamilynames}{\Xfamilynames}\ifexists{Xhonoricsuffix}{,\ \Xhonoricsuffix}}
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % vcard - the content of the vcard
 \newcommand\vcard{BEGIN:VCARD^^J
@@ -197,6 +199,8 @@ MECARD:N:\cond{Xfamilynames},\cond{Xgivennames};
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % address - the address as shown in the textbox
 \newcommand\address{
+
+    \ifthenelse{\isundefined{\Xdisplayaddress}}{
 	
 	\cond{Xpobox}
 
@@ -211,9 +215,9 @@ MECARD:N:\cond{Xfamilynames},\cond{Xgivennames};
 	\fi
 	
 	\cond{Xregion} \cond{Xcountry}
+	}{\cond{Xdisplayaddress}}
 	
 }
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % inserttext - assemble the textbox
@@ -275,9 +279,13 @@ MECARD:N:\cond{Xfamilynames},\cond{Xgivennames};
 		%\pbox[t]{0.9\textwidth}
 		{\bfseries
 		
+			\ifthenelse{\isundefined{\Xdisplayname}}{
+
 			\cond{name}
 		
 			\cond{Xadditionalnames}
+
+			}{\cond{Xdisplayname}}
 		
 		}
 	%\end{minipage}
@@ -301,22 +309,20 @@ MECARD:N:\cond{Xfamilynames},\cond{Xgivennames};
 % drawcard - assemble all blocks into the visiting card
 \newcommand\drawcard{
 	\ifBCQ@rightalign\begin{flushright}\fi
-		\ifthenelse{\equal{\Xlogo}{}}  % check if logo is empty
-			{\insertname}  % no logo - print name only
-			% else, print name and logo with layout options
-			{		
+        \ifthenelse{\boolean{BCQ@uselogo}}{
 			\begin{tabular*}{0.99\textwidth}{c c}
 			\ifthenelse{\boolean{BCQ@qrfirst}}
 				{\includegraphics[height=6mm, width=\imagepercents\textwidth, keepaspectratio]{\Xlogo} & \insertname}
 				{\insertname & \includegraphics[height=6mm, width=\imagepercents\textwidth, keepaspectratio]{\Xlogo}}
 			\end{tabular*}
-			}
+			}{\insertname}
 		
 		\noindent\makebox[\linewidth]{\rule{\paperwidth}{0.5mm}} % horizontal line
 		\ifexists{Xptitle}{
 			\inserttitle
-			\vspace{-\baselineskip}
-		} 
+			\vspace{-0.5\baselineskip}
+		}
+		\vspace{-\baselineskip}
 		\vfill
 		
 		\ifBCQ@qrfirst
@@ -330,6 +336,7 @@ MECARD:N:\cond{Xfamilynames},\cond{Xgivennames};
 		\fi
 
 		\ifexists{Xpgpfingerprint}{
+			\vspace{-0.5\baselineskip}
 			\vfill
 			\ifBCQ@iconleft
 				\faLock\ifBCQ@hint{\tiny\ pgp}\fi\hfill{\small\Xpgpfingerprint}
